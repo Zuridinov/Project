@@ -66,3 +66,12 @@ const answers = [];
 // answers[2] = prompt('Сколько вам лет?', '');
 
 console.log(typeof(answers));
+
+// 008 Интерполяция
+const category = 'toys';
+
+console.log(`https://someurl.com/${category}/5`);
+
+const user = "Ivan";
+
+alert(`Привет, ${user}`);
