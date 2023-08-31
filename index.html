@@ -8,21 +8,73 @@
     <link rel="stylesheet" href="css/style.min.css">
 </head>
 <body>
-    <div class="box" id="box"></div>
-    <button>1</button>
-    <button>2</button>
-    <button>3</button>
-    <button>4</button>
-    <button>5</button>
-
-    <div class="circle"></div>
-    <div class="circle"></div>
-    <div class="circle"></div>
-
     <div class="wrapper">
-        <div class="heart"></div>
-        <div class="heart"></div>
-        <div class="heart"></div>
+        <div class="header">
+            <div class="header__search">
+                <input type="text" class="search__link" placeholder="Поиск_________">
+            </div>
+            <div class="header__logo">
+                <a href="#" class="header__link">Logotype</a>
+            </div>
+        </div>
+        <section class="main">
+            <aside class="sidebar">
+                <ul class="sidebar__list">
+                    <li class="sidebar__Films">Фильмы</li>
+                    <li class="sidebar__Films">Сериалы</li>
+                    <li class="sidebar__Films">Мультфильмы</li>
+                    <li class="sidebar__Films">Клипы</li>
+                    <li class="sidebar__Films">Трейлеры</li>
+                </ul>
+            </aside>
+            <main class="content">
+                <div class="content__main">
+                    <div class="content__body">
+                        <div class="content__subtitle subtitle">Комедия</div>
+                        <div class="content__title">МАРСИАНИН</div>
+                        <div class="content__subtitle subtitle">История Человека, выжившего на чужой <br> планете в одиночку</div>
+                        <div class="content__pick">
+                            <div class="pick__first">IMDb: 8.0</div>
+                            <div class="pick__second">Кинопоиск: 7.7</div>
+                        </div>
+                    </div> 
+                </div>
+                <div class="content__second">
+                    <div class="saw__films">
+                        <div class="saw__title">Просмотренные фильмы</div>
+                        <ul class="saw__list">
+                            <li class="saw__links">Логан</li>
+                            <li class="saw__links">Лига Справедливости</li>
+                            <li class="saw__links">Ла-Ла Лэнд</li>
+                            <li class="saw__links">Одержимость</li>
+                            <li class="saw__links">Скотт Пилигрим Против...</li>
+                        </ul>
+                    </div>
+                    <div class="add__films">
+                        <div class="add__title">Добавить Новый Фильм</div>
+                        <div class="add__subtitle">Введите название фильма</div>
+                        <input type="text" class="add__input" placeholder="Что уже посмотренно?">
+                        <div class="add__subtitle">Сделать его любимым?</div>
+                        <input class="add__checkbox" type="checkbox">Да! <br>
+                        <button>Подтвердить</button>
+                    </div>
+                </div>
+            </main>
+            <aside class="sidebar-2">
+                <div class="sidebar-2__title">Реклама от спонсоров</div>
+                <ul class="sidebar-2__body">
+                    <li class="pictures">
+                        <img src="img/Без названия (1).jpeg" alt="">
+                    </li>
+                    <li class="pictures">
+                        <img src="img/Без названия (2).jpeg" alt="">
+                    </li>
+                    <li class="pictures">
+                        <img src="img/Без названия (3).jpeg" alt="">
+                    </li>
+                </ul>
+            </aside>
+        </section>
     </div>
     <script src="js/script.js"></script>
 </body>
