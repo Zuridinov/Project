@@ -803,3 +803,101 @@ div.innerHTML = "<h1>Hello World</h1>";
 // div.textContent = "Hello";
 
 div.insertAdjacentHTML("afterend", '<h2>Hello</h2>');
+
+// 030 Практика. Работает с Сайтом
+const movieDB = {
+    movies: [
+        "Логан",
+        "Лига Справедливости",
+        "Ла-ла ленд",
+        "Одержимость",
+        "Скотт Пилигрим Против..."
+    ]
+}
+
+const adv = document.querySelectorAll('.sidebar-2__body img'),
+      poster = document.querySelector('.content__main'), 
+      genre = poster.querySelector('.content__subtitle'),
+      movieList = document.querySelector('.saw__list');
+
+adv.forEach(item => {
+    item.remove();
+});
+genre.textContent = 'Драма';
+
+poster.style.backgroundImage = 'url("img/bg.jpeg")';
+
+movieList.innerHTML = "";
+
+movieDB.movies.sort();
+
+movieDB.movies.forEach((film, i) => {
+    movieList.innerHTML += `
+    <li class="saw__links">${i + 1}: ${film}</li>
+    `;
+});
+
+// 031 События и их Обработчики
+const btns = document.querySelectorAll('button'),
+      overlay = document.querySelector('.overlay');
+
+// btn.onclick = function() {
+//     alert('click');
+// };
+
+// btn.onclick = function() {
+//     alert('second click');
+// };
+
+// let i = 0
+const deleteElement = (e) => {
+    console.log(e.target);
+    console.log(e.type);
+    // i++;
+    // if (i == 1) {
+    //     btn.removeEventListener('click', deleteElement);
+    // }
+}
+
+// btn.addEventListener('click', deleteElement);
+// overlay.addEventListener('click', deleteElement);
+
+btns.forEach(btn => {
+    btn.addEventListener('click', deleteElement, {once: true});
+});
+
+const link = document.querySelector('a');
+
+link.addEventListener('click', function(event) {
+    event.preventDefault();
+
+    console.log(event.target);
+});
+
+// 032 Навигация по DOM - элементами, data-атрибутами, преимущество for_of
+
+// console.log(document.head);
+// console.log(document.documentElement);
+// console.log(document.body.childNodes);
+// console.log(document.body.firstChild);
+// console.log(document.body.firstElementChild);
+// // console.log(document.body.lastChild);
+
+// // console.log(document.querySelector('#current').parentNode.parentNode);
+// console.log(document.querySelector('#current').parentElement);
+
+// console.log(document.querySelector('[data-current="3"]').nextElementSibling);
+
+
+for (let node of document.body.childNodes) {
+    if (node.nodeName == "#text") {
+        continue;
+    }
+
+    console.log(node);
+}
+
+
+
+
+
