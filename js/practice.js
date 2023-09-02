@@ -897,6 +897,136 @@ for (let node of document.body.childNodes) {
     console.log(node);
 }
 
+// 033 Практика. Используем события
+document.addEventListener('DOMContentLoaded', () => {
+    const movieDB = {
+        movies: [
+            "Логан",
+            "Лига Справедливости",
+            "Ла-ла ленд",
+            "Одержимость",
+            "Скотт Пилигрим Против..."
+        ]
+    }
+    
+    const adv = document.querySelectorAll('.sidebar-2__body img'),
+          poster = document.querySelector('.content__main'), 
+          genre = poster.querySelector('.content__subtitle'),
+          movieList = document.querySelector('.saw__list'),
+          addForm = document.querySelector('form.add__films'),
+          addInput = addForm.querySelector('.add__input'),
+          checkbox = addForm.querySelector('[type="checkbox"]');
+
+    addForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        let newFilm = addInput.value;
+        const favorite = checkbox.checked;
+
+        if (newFilm) {
+
+            if (newFilm.length > 21) {
+                newFilm = `${newFilm.substring(0, 22)}...`;
+            }
+            
+            if (favorite) {
+                console.log("Добавляем любимый фильм");
+            }
+
+            movieDB.movies.push(newFilm);
+            sortArr(movieDB.movies);
+
+            createMovieList(movieDB.movies, movieList);
+        }
+        event.target.reset();
+    });    
+    
+    const deleteAdv = (arr) => {
+        arr.forEach(item => {
+            item.remove();
+        });
+    };
+   
+    const makeChanges = () => {
+        genre.textContent = 'Драма';
+    
+        poster.style.backgroundImage = 'url("img/bg.jpeg")';
+    };
+    
+    const sortArr = (arr) => {
+        arr.sort();
+    }
+
+    function createMovieList(films, parent) {
+        parent.innerHTML = "";
+        
+        films.forEach((film, i) => {
+            parent.innerHTML += `
+            <li class="saw__links">${i + 1}: ${film}</li>
+            `;
+        });
+    }
+    deleteAdv(adv);
+    makeChanges();
+    sortArr(movieDB.movies);
+    createMovieList(movieDB.movies, movieList);
+});
+
+// 034 События на мобильных устройствах
+// touchstart
+// touchmove
+// touchend
+// touchenter
+// touchleave
+// touchcancel
+
+
+window.addEventListener('DOMContentLoaded', () => {
+    const box = document.querySelector('.box');
+
+    box.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+
+        console.log('start!');
+        console.log(e.targetTouches);
+    });
+
+    box.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+
+        console.log(e.targetTouches[0].pageX);
+    });
+
+    // box.addEventListener('touchend', (e) => {
+    //     e.preventDefault();
+
+    //     console.log('end');
+    // });
+});
+
+// touches
+// targetTouches
+// changedTouches
+
+// 035 Async, defer, динамические скрипты
+const p = document.querySelectorAll('p');
+console.log(p);
+
+
+
+function loadScript(src) {
+    const script = document.createElement('Script');
+    script.src = src;
+    script.async = false;
+    document.body.append(script);
+}
+
+loadScript("js/test.js");
+loadScript();
+
+// defer
+// async
+
 
 
 
