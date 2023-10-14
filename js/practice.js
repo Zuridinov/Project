@@ -1028,6 +1028,1126 @@ loadScript();
 // async
 
 
+// 037 ClassList и делегирование событий 
+
+const btns = document.querySelectorAll('button'),
+      wrapper = document.querySelector('.btn-block');  
+
+// console.log(btns[0].classList.length); 
+// console.log(btns[0].classList.item(1)); 
+// console.log(btns[1].classList.add('red'));
+// console.log(btns[0].classList.remove('blue'));
+// console.log(btns[0].classList.toggle('blue'));
+
+// if (btns[1].classList.contains('red')) {
+//     console.log('red');
+// }
+
+btns[0].addEventListener('click', () => {
+    // if (!btns[1].classList.contains('red')) {
+    //     btns[1].classList.add('red');
+    // } else {
+    //     btns[1].classList.remove('red');
+    // }
+    btns[1].classList.toggle('red');
+});
+
+// console.log(btns[0].className);
+
+wrapper.addEventListener('click', (e) => {
+    if (e.target && e.target.matches("button.red")) {
+        console.log('Hello');
+    }
+});
+
+// btns.forEach(btn => {
+//     btn.addEventListener('click', () => {
+//         console.log('Hello');
+//     })
+// });
+
+const btn = document.createElement('button');
+btn.classList.add('red');
+wrapper.append(btn);
 
 
 
+
+// 038 Создаем табы в новом проекте
+    
+    const tabs = document.querySelectorAll('.tabheader__item'),
+          tabsContent = document.querySelectorAll('.tabcontent'),
+          tabsParent = document.querySelector('.tabheader__items');
+      
+          
+    function hideTabContent() {
+        tabsContent.forEach(item => {
+            item.classList.add('hide');
+            item.classList.remove('show', 'fade');
+        });
+
+        tabs.forEach(item => {
+            item.classList.remove('tabheader__item_active');
+        });
+    }   
+    
+    function showTabContent(i = 0) {
+        tabsContent[i].classList.add('show', 'fade');
+        tabsContent[i].classList.remove('hide');
+        tabs[i].classList.add('tabheader__item_active');
+    }
+
+    hideTabContent();
+    showTabContent();
+
+    tabsParent.addEventListener('click', (e) => {
+        const target = e.target;
+
+        if (target && target.classList.contains('tabheader__item')) {
+            tabs.forEach((item, i) => {
+                if (target == item) {
+                    hideTabContent();
+                    showTabContent(i);
+                }
+            });
+        }
+    });
+    
+    
+// 039 setTimeout setInterval
+
+const btn = document.querySelector('.btn');
+let timerId,
+    i = 0;
+
+
+function myAnimation() {
+    const elem = document.querySelector('.box');
+    let pos = 0;
+
+    const id = setInterval(frame, 10);
+    function frame() {
+        if (pos == 300) {
+            clearInterval(id);
+        } else {
+            pos++;
+            elem.style.top = pos + "px";
+            elem.style.left = pos + "px";
+        }
+    }
+}
+btn.addEventListener('click', myAnimation);
+
+// function logger () {
+//     if (i === 3) {
+//         clearInterval(timerId);
+//     }
+//     console.log('text');
+//     i++;
+// }
+
+
+
+// let id = setTimeout(function log(){
+//     console.log('Hello');
+//     id = setTimeout(log, 500)
+// }, 500);
+
+// 040 Работа с Даты
+// const now = new Date('2023-09-10');
+// new Date.parse('2023-09-10');
+
+
+// console.log(now.setHours(18));
+// console.log(now);
+
+
+// console.log(now.getFullYear());
+// console.log(now.getMonth());
+// console.log(now.getDate());
+// console.log(now.getHours());
+// console.log(now.getUTCHours());
+
+// console.log(now.getTimezoneOffset());
+// console.log(now.getTime());
+
+let start = new Date();
+
+for(let i = 0; i < 100000; i++) {
+    let some = i ** 3;
+}
+
+let end = new Date();
+
+alert(`Цикл отработал за ${end - start} миллисекунд`);
+
+
+// 041 Создаем таймер обратного отчета на сайте
+window.addEventListener('DOMContentLoaded', () => {
+
+    //TABS
+    
+        const tabs = document.querySelectorAll('.tabheader__item'),
+              tabsContent = document.querySelectorAll('.tabcontent'),
+              tabsParent = document.querySelector('.tabheader__items');
+          
+              
+        function hideTabContent() {
+            tabsContent.forEach(item => {
+                item.classList.add('hide');
+                item.classList.remove('show', 'fade');
+            });
+    
+            tabs.forEach(item => {
+                item.classList.remove('tabheader__item_active');
+            });
+        }   
+        
+        function showTabContent(i = 0) {
+            tabsContent[i].classList.add('show', 'fade');
+            tabsContent[i].classList.remove('hide');
+            tabs[i].classList.add('tabheader__item_active');
+        }
+    
+        hideTabContent();
+        showTabContent();
+    
+        tabsParent.addEventListener('click', (e) => {
+            const target = e.target;
+    
+            if (target && target.classList.contains('tabheader__item')) {
+                tabs.forEach((item, i) => {
+                    if (target == item) {
+                        hideTabContent();
+                        showTabContent(i);
+                    }
+                });
+            } 
+        });
+    
+    // Timer
+    
+        const deadline = '2023-09-21';
+    
+        function getTimeRemaining(endTime) {
+            const t = Date.parse(endTime) - Date.parse(new Date()),
+                  days = Math.floor(t / (1000 * 60 * 60 * 24)),
+                  hours = Math.floor((t / (1000 * 60 * 60) % 24)),
+                  minutes = Math.floor((t / 1000 / 60) % 60),
+                  seconds = Math.floor((t / 1000) % 60);
+            return {
+                'total': t,
+                'days': days,
+                'hours': hours,
+                'minutes': minutes,
+                'seconds': seconds
+            };       
+        }
+    
+        function getZero(num) {
+            if (num >= 0 && num < 10) {
+                return `0${num}`;
+            } else {
+                return num;
+            }
+        }
+    
+        function setClock(selector, endTime) {
+            const timer = document.querySelector(selector),
+                  days = timer.querySelector('#days'),
+                  hours = timer.querySelector('#hours'),
+                  minutes = timer.querySelector('#minutes'),
+                  seconds = timer.querySelector('#seconds'),
+                  timeInterval = setInterval(updateClock, 1000);
+    
+            updateClock();
+    
+            function updateClock() {
+                const t = getTimeRemaining(endTime);
+    
+                days.innerHTML = getZero(t.days);
+                hours.innerHTML = getZero(t.hours);
+                minutes.innerHTML = getZero(t.minutes);
+                seconds.innerHTML = getZero(t.seconds);
+    
+                if (t.total <= 0) {
+                    clearInterval(timeInterval);
+                }
+            }      
+        }
+    
+        setClock('.timer', deadline);
+});
+    
+
+// 042 Параметры документа, окна и работа с ними
+
+const box = document.querySelector('.box'),
+       btn = document.querySelector('.click');  
+
+// const width = box.clientWidth;
+// const height = box.clientHeight;
+
+// const width = box.offsetWidth;
+// const height = box.offsetHeight;
+
+const width = box.scrollWidth;
+const height = box.scrollHeight;
+
+console.log(width, height);
+
+btn.addEventListener('click', () => {
+    // box.style.height = box.scrollHeight + 'px';
+    console.log(box.scrollTop);
+});
+
+console.log(box.getBoundingClientRect().top);
+
+const style = window.getComputedStyle(box);
+
+console.log(style.display);
+
+console.log(document.documentElement.scrollTop);
+
+// 043 Создаем модальное окно
+
+window.addEventListener('DOMContentLoaded', () => {
+
+    //TABS
+    
+        const tabs = document.querySelectorAll('.tabheader__item'),
+              tabsContent = document.querySelectorAll('.tabcontent'),
+              tabsParent = document.querySelector('.tabheader__items');
+          
+              
+        function hideTabContent() {
+            tabsContent.forEach(item => {
+                item.classList.add('hide');
+                item.classList.remove('show', 'fade');
+            });
+    
+            tabs.forEach(item => {
+                item.classList.remove('tabheader__item_active');
+            });
+        }   
+        
+        function showTabContent(i = 0) {
+            tabsContent[i].classList.add('show', 'fade');
+            tabsContent[i].classList.remove('hide');
+            tabs[i].classList.add('tabheader__item_active');
+        }
+    
+        hideTabContent();
+        showTabContent();
+    
+        tabsParent.addEventListener('click', (e) => {
+            const target = e.target;
+    
+            if (target && target.classList.contains('tabheader__item')) {
+                tabs.forEach((item, i) => {
+                    if (target == item) {
+                        hideTabContent();
+                        showTabContent(i);
+                    }
+                });
+            } 
+        });
+    
+    // Timer
+    
+        const deadline = '2023-09-21';
+    
+        function getTimeRemaining(endTime) {
+            const t = Date.parse(endTime) - Date.parse(new Date()),
+                  days = Math.floor(t / (1000 * 60 * 60 * 24)),
+                  hours = Math.floor((t / (1000 * 60 * 60) % 24)),
+                  minutes = Math.floor((t / 1000 / 60) % 60),
+                  seconds = Math.floor((t / 1000) % 60);
+            return {
+                'total': t,
+                'days': days,
+                'hours': hours,
+                'minutes': minutes,
+                'seconds': seconds
+            };       
+        }
+    
+        function getZero(num) {
+            if (num >= 0 && num < 10) {
+                return `0${num}`;
+            } else {
+                return num;
+            }
+        }
+    
+        function setClock(selector, endTime) {
+            const timer = document.querySelector(selector),
+                  days = timer.querySelector('#days'),
+                  hours = timer.querySelector('#hours'),
+                  minutes = timer.querySelector('#minutes'),
+                  seconds = timer.querySelector('#seconds'),
+                  timeInterval = setInterval(updateClock, 1000);
+    
+            updateClock();
+    
+            function updateClock() {
+                const t = getTimeRemaining(endTime);
+    
+                days.innerHTML = getZero(t.days);
+                hours.innerHTML = getZero(t.hours);
+                minutes.innerHTML = getZero(t.minutes);
+                seconds.innerHTML = getZero(t.seconds);
+    
+                if (t.total <= 0) {
+                    clearInterval(timeInterval);
+                }
+            }      
+        }
+    
+        setClock('.timer', deadline);
+});
+
+// 044
+
+window.addEventListener('DOMContentLoaded', () => {
+
+    //TABS
+    
+        const tabs = document.querySelectorAll('.tabheader__item'),
+              tabsContent = document.querySelectorAll('.tabcontent'),
+              tabsParent = document.querySelector('.tabheader__items');
+          
+              
+        function hideTabContent() {
+            tabsContent.forEach(item => {
+                item.classList.add('hide');
+                item.classList.remove('show', 'fade');
+            });
+    
+            tabs.forEach(item => {
+                item.classList.remove('tabheader__item_active');
+            });
+        }   
+        
+        function showTabContent(i = 0) {
+            tabsContent[i].classList.add('show', 'fade');
+            tabsContent[i].classList.remove('hide');
+            tabs[i].classList.add('tabheader__item_active');
+        }
+    
+        hideTabContent();
+        showTabContent();
+    
+        tabsParent.addEventListener('click', (e) => {
+            const target = e.target;
+    
+            if (target && target.classList.contains('tabheader__item')) {
+                tabs.forEach((item, i) => {
+                    if (target == item) {
+                        hideTabContent();
+                        showTabContent(i);
+                    }
+                });
+            } 
+        });
+    
+    // Timer
+    
+        const deadline = '2023-09-21';
+    
+        function getTimeRemaining(endTime) {
+            const t = Date.parse(endTime) - Date.parse(new Date()),
+                  days = Math.floor(t / (1000 * 60 * 60 * 24)),
+                  hours = Math.floor((t / (1000 * 60 * 60) % 24)),
+                  minutes = Math.floor((t / 1000 / 60) % 60),
+                  seconds = Math.floor((t / 1000) % 60);
+            return {
+                'total': t,
+                'days': days,
+                'hours': hours,
+                'minutes': minutes,
+                'seconds': seconds
+            };       
+        }
+    
+        function getZero(num) {
+            if (num >= 0 && num < 10) {
+                return `0${num}`;
+            } else {
+                return num;
+            }
+        }
+    
+        function setClock(selector, endTime) {
+            const timer = document.querySelector(selector),
+                  days = timer.querySelector('#days'),
+                  hours = timer.querySelector('#hours'),
+                  minutes = timer.querySelector('#minutes'),
+                  seconds = timer.querySelector('#seconds'),
+                  timeInterval = setInterval(updateClock, 1000);
+    
+            updateClock();
+    
+            function updateClock() {
+                const t = getTimeRemaining(endTime);
+    
+                days.innerHTML = getZero(t.days);
+                hours.innerHTML = getZero(t.hours);
+                minutes.innerHTML = getZero(t.minutes);
+                seconds.innerHTML = getZero(t.seconds);
+    
+                if (t.total <= 0) {
+                    clearInterval(timeInterval);
+                }
+            }      
+        }
+    
+        setClock('.timer', deadline);
+
+    // Modal
+        
+    const modalTrigger = document.querySelectorAll('[data-modal]'),
+          closeModalBtn = document.querySelector('[data-close]'),
+          modal = document.querySelector('.modal');
+
+    function openModal() {
+        modal.classList.add('show');
+        modal.classList.remove('hide');
+        document.body.style.overflow = 'hidden';
+        clearInterval(modalTimerId);
+    }
+    
+    modalTrigger.forEach(btn => {
+        btn.addEventListener('click', openModal);
+    });   
+    
+    
+
+    function closeModal() {
+        modal.classList.add('hide');
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+   
+    closeModalBtn.addEventListener('click', closeModal);
+        
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.code === 'Escape' && modal.classList.contains('show')) {
+            closeModal();
+        }
+    });
+
+    const modalTimerId = setTimeout(openModal, 5000);
+
+    function showModalByScroll() {
+        if (window.scrollYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+            openModal();
+            window.removeEventListener('scroll', showModalByScroll);
+        }
+    }
+
+    window.addEventListener('scroll', showModalByScroll);
+        
+});
+
+
+// 045 Функции Конструкторы
+
+function User(name, id) {
+    this.name = name;
+    this.id = id;
+    this.human = true;
+    this.hello = function() {
+        console.log(`hello ${this.name}`);
+    }
+}
+
+User.prototype.exit = function() {
+    console.log(`Пользователь ${this.name} ушел`);
+}
+
+const ivan = new User('Ivan', 28);
+const alex = new User('Alex', 20);
+
+ivan.exit();
+
+ivan.hello();
+alex.hello();
+console.log(ivan);
+console.log(alex);
+
+
+// 046 Контекст вызова. This
+
+// function showThis(a, b) {
+//     console.log(this);
+//     function sum() {
+//         console.log(this);
+//         return a + b;
+//     }
+//     console.log(sum());
+// }
+// showThis(4, 5);
+
+
+// const obj = {
+//     a: 20,
+//     b: 15,
+//     sum: function() {
+//         function shout() {
+//             console.log(this);
+//         }
+//         shout();
+//     }
+// };
+// obj.sum();
+
+
+// function User(name, id) {
+//     this.name = name;
+//     this.id = id;
+//     this.human = true;
+//     this.hello = function() {
+//         console.log("Hello!" + this.name);
+//     };
+// }
+// let ivan = new User('Ivan', 23);
+
+// function sayName(surname) {
+//     console.log(this);
+//     console.log(this.name + surname);
+// };
+
+// const user = {
+//     name: 'John'
+// };
+
+// sayName.call(user, 'Smith');
+// sayName.apply(user, ['Smith']);
+
+// function count(num) {
+//     return this*num;
+// }
+
+// const double = count.bind(2);
+// console.log(double(3));
+// console.log(double(13));
+
+const obj = {
+    num: 5,
+    sayNumber: function() {
+        const say = () => {
+            console.log(this);
+        }
+        say();
+    }
+}
+
+obj.sayNumber();
+
+
+const double = a => a * 2;
+
+console.log(double(4));
+
+
+
+// 1) Обычная функция: this = window,  но если use strict - undefined
+// 2) Контекст у методов объекта - сам объект
+// 3) this в конструкторах и классах - это новый экземпляр объекта
+// 4) Ручная привязка this: call, apply, bind
+
+
+// 47 Классы
+class Rectangle {
+    constructor(height, width) {
+        this.height = height;
+        this.width = width;
+    }
+
+    calcArea() {
+        return this.height * this.width;
+    }
+}
+
+class ColoredRectangleWithText extends Rectangle {
+    constructor(height, width, text, bgColor) {
+        super(height, width);
+        this.text = text;
+        this.bgColor = bgColor;
+    }
+    
+    showMyProps() {
+        console.log(`Текст: ${this.text}, цвет: ${this.bgColor}`);
+    }
+}
+
+const div = new ColoredRectangleWithText(25, 10, 'Hello World!', 'red');
+
+div.showMyProps();
+console.log(div.calcArea());
+
+
+// const square = new Rectangle(10, 10);
+// const long = new Rectangle(20, 100);
+
+// console.log(long.calcArea());
+// console.log(square.calcArea());
+
+// 048 Практика. Используем классы
+
+window.addEventListener('DOMContentLoaded', () => {
+
+    //TABS
+    
+        const tabs = document.querySelectorAll('.tabheader__item'),
+              tabsContent = document.querySelectorAll('.tabcontent'),
+              tabsParent = document.querySelector('.tabheader__items');
+          
+              
+        function hideTabContent() {
+            tabsContent.forEach(item => {
+                item.classList.add('hide');
+                item.classList.remove('show', 'fade');
+            });
+    
+            tabs.forEach(item => {
+                item.classList.remove('tabheader__item_active');
+            });
+        }   
+        
+        function showTabContent(i = 0) {
+            tabsContent[i].classList.add('show', 'fade');
+            tabsContent[i].classList.remove('hide');
+            tabs[i].classList.add('tabheader__item_active');
+        }
+    
+        hideTabContent();
+        showTabContent();
+    
+        tabsParent.addEventListener('click', (e) => {
+            const target = e.target;
+    
+            if (target && target.classList.contains('tabheader__item')) {
+                tabs.forEach((item, i) => {
+                    if (target == item) {
+                        hideTabContent();
+                        showTabContent(i);
+                    }
+                });
+            } 
+        });
+    
+    // Timer
+    
+        const deadline = '2023-09-21';
+    
+        function getTimeRemaining(endTime) {
+            const t = Date.parse(endTime) - Date.parse(new Date()),
+                  days = Math.floor(t / (1000 * 60 * 60 * 24)),
+                  hours = Math.floor((t / (1000 * 60 * 60) % 24)),
+                  minutes = Math.floor((t / 1000 / 60) % 60),
+                  seconds = Math.floor((t / 1000) % 60);
+            return {
+                'total': t,
+                'days': days,
+                'hours': hours,
+                'minutes': minutes,
+                'seconds': seconds
+            };       
+        }
+    
+        function getZero(num) {
+            if (num >= 0 && num < 10) {
+                return `0${num}`;
+            } else {
+                return num;
+            }
+        }
+    
+        function setClock(selector, endTime) {
+            const timer = document.querySelector(selector),
+                  days = timer.querySelector('#days'),
+                  hours = timer.querySelector('#hours'),
+                  minutes = timer.querySelector('#minutes'),
+                  seconds = timer.querySelector('#seconds'),
+                  timeInterval = setInterval(updateClock, 1000);
+    
+            updateClock();
+    
+            function updateClock() {
+                const t = getTimeRemaining(endTime);
+    
+                days.innerHTML = getZero(t.days);
+                hours.innerHTML = getZero(t.hours);
+                minutes.innerHTML = getZero(t.minutes);
+                seconds.innerHTML = getZero(t.seconds);
+    
+                if (t.total <= 0) {
+                    clearInterval(timeInterval);
+                }
+            }      
+        }
+    
+        setClock('.timer', deadline);
+
+    // Modal
+        
+    const modalTrigger = document.querySelectorAll('[data-modal]'),
+          closeModalBtn = document.querySelector('[data-close]'),
+          modal = document.querySelector('.modal');
+
+    function openModal() {
+        modal.classList.add('show');
+        modal.classList.remove('hide');
+        document.body.style.overflow = 'hidden';
+        clearInterval(modalTimerId);
+    }
+    
+    modalTrigger.forEach(btn => {
+        btn.addEventListener('click', openModal);
+    });   
+    
+    
+
+    function closeModal() {
+        modal.classList.add('hide');
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+   
+    closeModalBtn.addEventListener('click', closeModal);
+        
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.code === 'Escape' && modal.classList.contains('show')) {
+            closeModal();
+        }
+    });
+
+    // const modalTimerId = setTimeout(openModal, 5000);
+
+    function showModalByScroll() {
+        if (window.scrollYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+            openModal();
+            window.removeEventListener('scroll', showModalByScroll);
+        }
+    }
+
+    window.addEventListener('scroll', showModalByScroll);
+
+
+    // Используем классы для карточек
+
+    class MenuCard {
+        constructor(src, alt, title, descr, price, parentSelector) {
+            this.src = src;
+            this.alt = alt;
+            this.title = title;
+            this.descr = descr;
+            this.price = price;
+            this.parent = document.querySelector(parentSelector);
+            this.transfer = 88;
+            this.chanceToSom();
+        }
+
+        chanceToSom() {
+            this.price = this.price * this.transfer;
+        }
+
+        render() {
+            const element = document.createElement('div');
+            element.innerHTML = `
+                <div class="menu__item">
+                    <img src=${this.src} alt=${this.alt}>
+                    <h3 class="menu__item-subtitle">${this.title}</h3>
+                    <div class="menu__item-descr">${this.descr}</div>
+                    <div class="menu__item-divider"></div>
+                    <div class="menu__item-price">
+                        <div class="menu__item-cost">Цена:</div>
+                        <div class="menu__item-total"><span>${this.price}</span> сом/день</div>
+                    </div>
+                </div>
+            `;
+            this.parent.append(element);
+        }
+    }
+    
+    new MenuCard(
+        "img/tabs/vegy.jpg",
+        "vegy",
+        'Меню "Фитнес"',
+        'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
+        3,
+        '.menu .container'
+    ).render();
+
+    new MenuCard(
+        "img/tabs/elite.jpg",
+        "elite",
+        'Меню “Премиум”',
+        'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
+        5,
+        '.menu .container'
+    ).render();
+
+    new MenuCard(
+        "img/tabs/post.jpg",
+        "post",
+        'Меню "Постное"',
+        'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
+        4,
+        '.menu .container'
+    ).render();
+});
+
+
+// 049 Rest оператор и параметры по умолчанию
+
+const log = function(a, b, ...rest) {
+    console.log(a, b, rest);
+}
+
+log('basic', 'rest', 'operator', 'usage');
+
+function calcOrDouble(number, basis = 2) {
+
+    console.log(number * basis);
+}
+
+calcOrDouble(3);
+
+window.addEventListener('DOMContentLoaded', () => {
+
+    //TABS
+    
+        const tabs = document.querySelectorAll('.tabheader__item'),
+              tabsContent = document.querySelectorAll('.tabcontent'),
+              tabsParent = document.querySelector('.tabheader__items');
+          
+              
+        function hideTabContent() {
+            tabsContent.forEach(item => {
+                item.classList.add('hide');
+                item.classList.remove('show', 'fade');
+            });
+    
+            tabs.forEach(item => {
+                item.classList.remove('tabheader__item_active');
+            });
+        }   
+        
+        function showTabContent(i = 0) {
+            tabsContent[i].classList.add('show', 'fade');
+            tabsContent[i].classList.remove('hide');
+            tabs[i].classList.add('tabheader__item_active');
+        }
+    
+        hideTabContent();
+        showTabContent();
+    
+        tabsParent.addEventListener('click', (e) => {
+            const target = e.target;
+    
+            if (target && target.classList.contains('tabheader__item')) {
+                tabs.forEach((item, i) => {
+                    if (target == item) {
+                        hideTabContent();
+                        showTabContent(i);
+                    }
+                });
+            } 
+        });
+    
+    // Timer
+    
+        const deadline = '2023-09-21';
+    
+        function getTimeRemaining(endTime) {
+            const t = Date.parse(endTime) - Date.parse(new Date()),
+                  days = Math.floor(t / (1000 * 60 * 60 * 24)),
+                  hours = Math.floor((t / (1000 * 60 * 60) % 24)),
+                  minutes = Math.floor((t / 1000 / 60) % 60),
+                  seconds = Math.floor((t / 1000) % 60);
+            return {
+                'total': t,
+                'days': days,
+                'hours': hours,
+                'minutes': minutes,
+                'seconds': seconds
+            };       
+        }
+    
+        function getZero(num) {
+            if (num >= 0 && num < 10) {
+                return `0${num}`;
+            } else {
+                return num;
+            }
+        }
+    
+        function setClock(selector, endTime) {
+            const timer = document.querySelector(selector),
+                  days = timer.querySelector('#days'),
+                  hours = timer.querySelector('#hours'),
+                  minutes = timer.querySelector('#minutes'),
+                  seconds = timer.querySelector('#seconds'),
+                  timeInterval = setInterval(updateClock, 1000);
+    
+            updateClock();
+    
+            function updateClock() {
+                const t = getTimeRemaining(endTime);
+    
+                days.innerHTML = getZero(t.days);
+                hours.innerHTML = getZero(t.hours);
+                minutes.innerHTML = getZero(t.minutes);
+                seconds.innerHTML = getZero(t.seconds);
+    
+                if (t.total <= 0) {
+                    clearInterval(timeInterval);
+                }
+            }      
+        }
+    
+        setClock('.timer', deadline);
+
+    // Modal
+        
+    const modalTrigger = document.querySelectorAll('[data-modal]'),
+          closeModalBtn = document.querySelector('[data-close]'),
+          modal = document.querySelector('.modal');
+
+    function openModal() {
+        modal.classList.add('show');
+        modal.classList.remove('hide');
+        document.body.style.overflow = 'hidden';
+        clearInterval(modalTimerId);
+    }
+    
+    modalTrigger.forEach(btn => {
+        btn.addEventListener('click', openModal);
+    });   
+    
+    
+
+    function closeModal() {
+        modal.classList.add('hide');
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+   
+    closeModalBtn.addEventListener('click', closeModal);
+        
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.code === 'Escape' && modal.classList.contains('show')) {
+            closeModal();
+        }
+    });
+
+    const modalTimerId = setTimeout(openModal, 5000);
+
+    function showModalByScroll() {
+        if (window.scrollYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+            openModal();
+            window.removeEventListener('scroll', showModalByScroll);
+        }
+    }
+
+    window.addEventListener('scroll', showModalByScroll);
+
+
+    // Используем классы для карточек
+
+    class MenuCard {
+        constructor(src, alt, title, descr, price, parentSelector, ...classes) {
+            this.src = src;
+            this.alt = alt;
+            this.title = title;
+            this.descr = descr;
+            this.price = price;
+            this.classes = classes;
+            this.parent = document.querySelector(parentSelector);
+            this.transfer = 88;
+            this.chanceToSom();
+        }
+
+        chanceToSom() {
+            this.price = this.price * this.transfer;
+        }
+
+        render() {
+            const element = document.createElement('div');
+            
+            if (this.classes.length === 0) {
+                this.element = 'menu__item';
+                element.classList.add(this.element);
+            } else {
+                this.classes.forEach(className => element.classList.add(className));
+            }
+
+            element.innerHTML = `
+                <img src=${this.src} alt=${this.alt}>
+                <h3 class="menu__item-subtitle">${this.title}</h3>
+                <div class="menu__item-descr">${this.descr}</div>
+                <div class="menu__item-divider"></div>
+                <div class="menu__item-price">
+                    <div class="menu__item-cost">Цена:</div>
+                    <div class="menu__item-total"><span>${this.price}</span> сом/день</div>
+                </div>
+                
+            `;
+            this.parent.append(element);
+        }
+    }
+    
+    new MenuCard(
+        "img/tabs/vegy.jpg",
+        "vegy",
+        'Меню "Фитнес"',
+        'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
+        3,
+        '.menu .container',
+        'menu__item',
+        'big'
+    ).render();
+
+    new MenuCard(
+        "img/tabs/elite.jpg",
+        "elite",
+        'Меню “Премиум”',
+        'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
+        5,
+        '.menu .container',
+        'menu__item'
+    ).render();
+
+    new MenuCard(
+        "img/tabs/post.jpg",
+        "post",
+        'Меню "Постное"',
+        'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
+        4,
+        '.menu .container',
+        'menu__item'
+    ).render();
+
+
+});
